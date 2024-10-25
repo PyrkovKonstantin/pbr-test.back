@@ -1,0 +1,43 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/api/readiness": {
+            "get": {
+                "operationId": "AppController_isReady",
+                "summary": "Api is ready",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "service"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "NestJS App",
+        "description": "The NestJS App API description",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [
+        {
+            "name": "NestJS App",
+            "description": ""
+        }
+    ],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
+        "schemas": {}
+    }
+}

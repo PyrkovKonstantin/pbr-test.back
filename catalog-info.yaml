@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: NestJS App
+  description: App description
+spec:
+  type: service
+  owner: user:KOPyrkov
+  lifecycle: experimental
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: NestJS App API
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: user:KOPyrkov
+  definition: ./public/swagger-spec.json
