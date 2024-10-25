@@ -28,7 +28,6 @@ import {
   AuthRegisterDto,
   AuthResetPasswordDto,
 } from '../../dtos/access/auth/auth.dto';
-import Country from '../../../database/entities/directories/countries.entity';
 
 @Injectable()
 export class AuthService {
@@ -40,8 +39,6 @@ export class AuthService {
 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(Country)
-    private readonly countryRepository: Repository<Country>,
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
     @InjectRepository(UserPasswordReset)
@@ -55,19 +52,14 @@ export class AuthService {
   }
 
   async register(data: AuthRegisterDto) {
-    const { countryId, email, password, ...payload } = data;
+    const { email, password, ...payload } = data;
 
     await this.checkEmailUnique(email);
-
-    const country = await this.countryRepository.findOneByOrFail({
-      id: countryId,
-    });
 
     await this.userRepository.save({
       id: randomUUID(),
       ...payload,
       password: await this.hashPassword(password),
-      country,
       email,
       role: await this.roleRepository.findOneBy({
         slug: RoleEnum.USER_ROZNITSA,
