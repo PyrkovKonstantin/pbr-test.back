@@ -20,10 +20,10 @@ function initializeSwaggerDocumentation(
   swaggerPath: string,
 ) {
   const swaggerDocs = new DocumentBuilder()
-    .setTitle('NestJS App')
-    .setDescription('The NestJS App API description')
+    .setTitle('PBR test App')
+    .setDescription('The PBR test API description')
     .setVersion('1.0')
-    .addTag('NestJS App')
+    .addTag('PBR test App')
     .addBearerAuth()
     .build();
 

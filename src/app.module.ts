@@ -11,6 +11,7 @@ import { AuthService } from './app/services/access/auth.service';
 import Role from './database/entities/access/roles.entity';
 import User from './database/entities/access/user.entity';
 import UserPasswordReset from './database/entities/access/user-password-reset.entity';
+import { UserService } from './app/services/access/users.service';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import UserPasswordReset from './database/entities/access/user-password-reset.en
     TypeOrmModule.forFeature([Role, User, UserPasswordReset]),
   ],
   controllers: [AppController, AuthController],
-  providers: [AuthService],
+  providers: [AuthService, UserService],
 })
 export class AppModule {}
