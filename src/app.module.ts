@@ -8,6 +8,9 @@ import SmtpConfigService from './config/mailer.config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './app/controllers/access/auth.controller';
 import { AuthService } from './app/services/access/auth.service';
+import Role from './database/entities/access/roles.entity';
+import User from './database/entities/access/user.entity';
+import UserPasswordReset from './database/entities/access/user-password-reset.entity';
 
 @Module({
   imports: [
@@ -22,9 +25,10 @@ import { AuthService } from './app/services/access/auth.service';
       useClass: SmtpConfigService,
     }),
     JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '8h' },
+      secret: process.env.JWT_ACCESS_KEY,
+      signOptions: { expiresIn: process.env.TOKEN_EXPIRES_IN },
     }),
+    TypeOrmModule.forFeature([Role, User, UserPasswordReset]),
   ],
   controllers: [AppController, AuthController],
   providers: [AuthService],

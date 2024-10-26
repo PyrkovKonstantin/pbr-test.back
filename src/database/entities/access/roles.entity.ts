@@ -25,12 +25,6 @@ export default class Role {
   @Column('varchar', { unique: true })
   public name: string;
 
-  @ApiProperty()
-  @Column('varchar', {
-    name: 'name_en',
-  })
-  public nameEn: string;
-
   @ApiProperty({ enum: RoleEnum })
   @Column('varchar', { unique: true })
   public slug: RoleEnum;
