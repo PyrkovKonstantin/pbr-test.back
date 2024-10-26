@@ -7,11 +7,9 @@ import { ValidationPipe } from './pipes/validation.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { INestApplication } from '@nestjs/common';
-import { AmqpBrokerService } from './modules/amqp-broker/amqp-broker.service';
 import { sleep } from './libs/utils';
 import morgan from 'morgan';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
-import config from './config';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -65,7 +63,7 @@ export async function bootstrap() {
     initializeSwaggerDocumentation(app, swaggerPath);
   }
 
-  await app.listen(config.appPort);
+  await app.listen(process.env.PORT);
 
   return app;
 }
@@ -73,8 +71,6 @@ export async function bootstrap() {
 const shutdown = async (app: INestApplication) => {
   logger.log('Gracefull shutdown');
   try {
-    const amqpBrokerService = app.get(AmqpBrokerService);
-    await amqpBrokerService.close();
     await sleep(1 * 1000);
     await app.close();
     process.exit(0);

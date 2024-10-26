@@ -67,19 +67,6 @@ export class AuthController {
     return this.authService.register(data);
   }
 
-  @Post('login/admin')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    type: () => AuthResponseDto,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Неверный логин или пароль',
-  })
-  async loginAdmin(@Body() data: AuthLoginDto) {
-    return this.authService.loginAdmin(data);
-  }
-
   @Post('refresh-token')
   @ApiResponse({
     status: HttpStatus.OK,

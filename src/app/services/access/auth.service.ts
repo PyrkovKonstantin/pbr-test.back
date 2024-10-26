@@ -62,7 +62,7 @@ export class AuthService {
       password: await this.hashPassword(password),
       email,
       role: await this.roleRepository.findOneBy({
-        slug: RoleEnum.USER_ROZNITSA,
+        slug: RoleEnum.USER,
       }),
     });
   }
@@ -84,36 +84,6 @@ export class AuthService {
       .addSelect('u.password')
       .where('u.email = :email', { email })
       .andWhere('role.slug != :slug', { slug: RoleEnum.ADMIN })
-      .leftJoinAndSelect('u.role', 'role')
-      .getOne();
-
-    if (!user) {
-      throw new NotFoundException(`User ${email} not found`);
-    }
-
-    if (!(await verify(user.password, password))) {
-      throw new UnauthorizedException('Invalid password');
-    }
-
-    const payload = { email: user.email, sub: user.id };
-
-    return {
-      accessToken: this.jwtService.sign(payload),
-      refreshToken: this.jwtService.sign(payload, {
-        expiresIn: REFRESH_TOKEN_EXPIRES_IN_STRING,
-      }),
-      expiresIn: TOKEN_EXPIRES_IN,
-      refreshExpiresIn: REFRESH_TOKEN_EXPIRES_IN,
-    };
-  }
-
-  async loginAdmin(data: AuthLoginDto) {
-    const { email, password } = data;
-    const user = await this.userRepository
-      .createQueryBuilder('u')
-      .addSelect('u.password')
-      .where('u.email = :email', { email })
-      .andWhere('role.slug = :slug', { slug: RoleEnum.ADMIN })
       .leftJoinAndSelect('u.role', 'role')
       .getOne();
 
